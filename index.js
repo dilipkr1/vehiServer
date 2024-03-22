@@ -6,6 +6,7 @@ const app = express();
 const cors = require('cors');
 
 
+
 app.use(cors({
   origin: '*',
   credentials: true
@@ -23,7 +24,7 @@ const order = require('./Routes/orderRoutes')
 const messages = require('./Routes/messageRoutes')
 const familyNumber = require('./Routes/userContactRoutes')
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 8000;
 const url = process.env.MONGO_URL;
 
 const mongoose = require('mongoose');
