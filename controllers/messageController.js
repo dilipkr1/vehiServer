@@ -60,7 +60,7 @@ const post_call = async (req, res) => {
     const numbers = req.body.number;
 
     if (!username || !password) {
-        res.status(500).json({ error: "Username or password not provided" });
+        res.status(500).json({ error: "Username or password does not provided" });
         return;
     }
 
