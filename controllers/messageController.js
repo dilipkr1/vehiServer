@@ -53,15 +53,19 @@ const post_message = async (req, res) => {
 
 
 
-
 const post_call = async (req, res) => {
-    const username = process.env.USER_NAME
-    const password = process.env.USER_PASSWORD
+    const username = process.env.USER_NAME;
+    const password = process.env.USER_PASSWORD;
     const key = req.body.key;
     const numbers = req.body.number;
 
+    if (!username || !password) {
+        res.status(500).json({ error: "Username or password not provided" });
+        return;
+    }
+
     const auth = btoa(`${username}:${password}`);
-    const url = "https://telephonycloud.co.in/api/v1/mask"; 
+    const url = "https://telephonycloud.co.in/api/v1/mask";
     try {
         const response = await fetch(url, {
             method: "POST",
@@ -75,19 +79,25 @@ const post_call = async (req, res) => {
                 "max-call-duration": 900,
             }),
         });
+
+        if (!response.ok) {
+            // Handle non-OK responses
+            const errorText = await response.text();
+            throw new Error(`Request failed with status ${response.status}: ${errorText}`);
+        }
+
         const responseData = await response.text();
         if (responseData === "OK") {
             res.status(200).json({ message: "API call successful" });
             return;
+        } else {
+             res.status(500).json({ error: "Unexpected response from server" });
         }
-
-        const data = JSON.parse(responseData);
-        res.status(200).json(responseData);
-
     } catch (error) {
-        // console.error("Error:", error);
-        res.status(500).json({ error});
+        console.error("Error:", error);
+        res.status(500).json({ error: "An error occurred" });
     }
-}
+};
+
 
 module.exports = { post_message, post_call }
