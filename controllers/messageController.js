@@ -55,8 +55,8 @@ const post_message = async (req, res) => {
 
 
 const post_call = async (req, res) => {
-    const username = process.env.USERNAME
-    const password = process.env.PASSWORD
+    const username = process.env.USER_NAME
+    const password = process.env.USER_PASSWORD
     const key = req.body.key;
     const numbers = req.body.number;
 
@@ -76,12 +76,15 @@ const post_call = async (req, res) => {
                 "max-call-duration": 900,
             }),
         });
-
-        if (!response.ok) {
-            throw new Error("Failed to call API");
+        const responseData = await response.text();
+        if (responseData === "OK") {
+            res.status(200).json({ message: "API call successful" });
+            return;
         }
-        const data = await response.json();
-        res.json(data);
+
+        const data = JSON.parse(responseData);
+        res.status(200).json(data);
+
     } catch (error) {
         console.error("Error:", error);
         res.status(500).json({ error: "An error occurred" });
