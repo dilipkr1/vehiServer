@@ -50,7 +50,7 @@ app.use('/api/settings', settingBusData);
 app.use('/api/wallet', walletTranscation);
 app.use('/api/packages', packages)
 app.use('/api/orders', order)
-app.use('/api/messages', messages)
+app.use('/api/msg', messages)
 app.use('/api/contacts', familyNumber)
 
 app.listen(PORT, () => {
