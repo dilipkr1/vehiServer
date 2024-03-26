@@ -61,8 +61,7 @@ const post_call = async (req, res) => {
     const numbers = req.body.number;
 
     const auth = btoa(`${username}:${password}`);
-    const url = "https://telephonycloud.co.in/api/v1/mask";
-
+    const url = "https://telephonycloud.co.in/api/v1/mask"; 
     try {
         const response = await fetch(url, {
             method: "POST",
@@ -83,11 +82,11 @@ const post_call = async (req, res) => {
         }
 
         const data = JSON.parse(responseData);
-        res.status(200).json(data);
+        res.status(200).json(responseData);
 
     } catch (error) {
-        console.error("Error:", error);
-        res.status(500).json({ error: "An error occurred" });
+        // console.error("Error:", error);
+        res.status(500).json({ error});
     }
 }
 
