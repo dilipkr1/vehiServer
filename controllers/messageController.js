@@ -54,8 +54,8 @@ const post_message = async (req, res) => {
 
 
 const post_call = async (req, res) => {
-    const username = process.env.USER_NAME;
-    const password = process.env.USER_PASSWORD;
+    const username = "7852010838";
+    const password = "admin";
     const key = req.body.key;
     const numbers = req.body.number;
 
